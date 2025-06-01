@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+  let principal = parseFloat(prompt("Enter the principal amount (P):"));
+  let rate = parseFloat(prompt("Enter the annual interest rate (r) in %:"));
+  let time = parseFloat(prompt("Enter the time period (t) in years:"));
+  let n = parseFloat(prompt("Enter number of times interest applied per year (n):"));
+
+
+  let amount = principal * Math.pow((1 + (rate / (100 * n))), n * time);
+  let compoundInterest = amount - principal;
+
+  alert("Compound Interest is: " + compoundInterest.toFixed(2));
+  alert("Total Amount after " + time + " years is: " + amount.toFixed(2));
+</script>
+
+</body>
+</html>

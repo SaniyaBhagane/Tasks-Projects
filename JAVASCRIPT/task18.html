@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Form Validation Example</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+  label { display: block; margin-top: 15px; font-weight: bold; }
+  input, select { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+  .error { color: red; font-size: 0.9em; margin-top: 3px; }
+  button { margin-top: 20px; padding: 10px 15px; }
+</style>
+</head>
+<body>
+
+<h2>Registration Form</h2>
+
+<form id="registrationForm" novalidate>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" placeholder="Enter your full name" />
+  <div id="nameError" class="error"></div>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" placeholder="example@mail.com" />
+  <div id="emailError" class="error"></div>
+
+  <label for="contact">Contact (10-digit):</label>
+  <input type="tel" id="contact" name="contact" placeholder="1234567890" />
+  <div id="contactError" class="error"></div>
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age" placeholder="Enter your age" />
+  <div id="ageError" class="error"></div>
+
+  <label for="designation">Designation:</label>
+  <input type="text" id="designation" name="designation" placeholder="Enter your designation" />
+  <div id="designationError" class="error"></div>
+
+  <label for="dob">Date of Birth:</label>
+  <input type="date" id="dob" name="dob" />
+  <div id="dobError" class="error"></div>
+
+  <label for="files">Select Files (Max 3 files, max 2MB each):</label>
+  <input type="file" id="files" name="files" multiple />
+  <div id="filesError" class="error"></div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const form = document.getElementById('registrationForm');
+
+  function validateName(name) {
+    return /^[a-zA-Z\s]+$/.test(name.trim());
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  }
+
+  function validateContact(contact) {
+    return /^\d{10}$/.test(contact.trim());
+  }
+
+  function validateAge(age) {
+    return age >= 18 && age <= 100;
+  }
+
+  function validateDesignation(designation) {
+    return designation.trim().length > 0;
+  }
+
+  function validateDOB(dob) {
+    if (!dob) return false;
+    const dobDate = new Date(dob);
+    const today = new Date();
+    if (dobDate >= today) return false;
+    const ageDifMs = today - dobDate;
+    const ageDate = new Date(ageDifMs);
+    const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+    return age >= 18;
+  }
+
+  function validateFiles(files) {
+    if (files.length === 0) return false;
+    if (files.length > 3) return false;
+    for (let i = 0; i < files.length; i++) {
+      if (files[i].size > 2 * 1024 * 1024) return false; 
+    }
+    return true;
+  }
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+    document.querySelectorAll('.error').forEach(e => e.textContent = '');
+
+    const name = form.name.value;
+    const email = form.email.value;
+    const contact = form.contact.value;
+    const age = Number(form.age.value);
+    const designation = form.designation.value;
+    const dob = form.dob.value;
+    const files = form.files.files;
+
+    let valid = true;
+
+    if (!validateName(name)) {
+      document.getElementById('nameError').textContent = "Please enter a valid name (letters and spaces only).";
+      valid = false;
+    }
+    if (!validateEmail(email)) {
+      document.getElementById('emailError').textContent = "Please enter a valid email address.";
+      valid = false;
+    }
+    if (!validateContact(contact)) {
+      document.getElementById('contactError').textContent = "Please enter a valid 10-digit contact number.";
+      valid = false;
+    }
+    if (!validateAge(age)) {
+      document.getElementById('ageError').textContent = "Age must be between 18 and 100.";
+      valid = false;
+    }
+    if (!validateDesignation(designation)) {
+      document.getElementById('designationError').textContent = "Designation cannot be empty.";
+      valid = false;
+    }
+    if (!validateDOB(dob)) {
+      document.getElementById('dobError').textContent = "Enter a valid date of birth. You must be at least 18 years old.";
+      valid = false;
+    }
+    if (!validateFiles(files)) {
+      document.getElementById('filesError').textContent = "Select 1 to 3 files. Each file must be less than 2MB.";
+      valid = false;
+    }
+
+    if (valid) {
+      alert("Form submitted successfully!");
+      form.reset();
+    } else {
+      alert("Please fix the errors and try again.");
+    }
+  });
+</script>
+
+</body>
+</html>

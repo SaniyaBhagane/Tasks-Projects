@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Callback Function Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      max-width: 500px;
+      margin: auto;
+      background-color: #f4f4f4;
+    }
+    h2 {
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #callbackResult {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h2> Callback Function Example</h2>
+  <label for="userInput">Enter your name:</label>
+  <input type="text" id="userInput" placeholder="e.g., Saniya" />
+  <button onclick="getUserInput()">Submit</button>
+
+  <p id="callbackResult"></p>
+
+  <script>
+    function displayName(name) {
+      document.getElementById("callbackResult").textContent = `Hello, ${name}! Welcome 🎉`;
+    }
+
+    function getUserInput() {
+      const name = document.getElementById("userInput").value.trim();
+      if (name) {
+        processUserInput(name, displayName);
+      } else {
+        alert("Please enter your name.");
+      }
+    }
+
+    function processUserInput(data, callback) {
+      callback(data); 
+    }
+  </script>
+
+</body>
+</html>

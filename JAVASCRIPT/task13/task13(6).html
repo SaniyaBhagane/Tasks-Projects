@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>First 3 Elements</title>
+</head>
+<body>
+  <h2>First 3 Elements:</h2>
+  <ul id="outputList"></ul>
+
+  <script >
+    const fruits = ["Apple", "Banana", "Cherry", "Mango", "Orange"];
+    const outputList = document.getElementById("outputList");
+
+    const firstThree = fruits.slice(0, 3);
+
+    firstThree.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        outputList.appendChild(li);
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Display 3 Cards in a Row</title>
+  <style>
+    #cardContainer {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px;
+    }
+    .card {
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 16px;
+      text-align: center;
+      background-color: #f9f9f9;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      margin: 0 0 10px;
+    }
+    .card p {
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<h2></h2>
+
+<div id="cardContainer"></div>
+
+<script>
+  const cardsData = [
+    {
+      title: "Card One",
+      description: "This is the description for card one. It contains some example text.",
+      image: "https://picsum.photos/id/1011/300/140"
+    },
+    {
+      title: "Card Two",
+      description: "Description for the second card goes here. It's short and sweet.",
+      image: "https://picsum.photos/id/1012/300/140"
+    },
+    {
+      title: "Card Three",
+      description: "Third card's description. Providing more information about this card.",
+      image: "https://picsum.photos/id/1013/300/140"
+    }
+  ];
+
+  const container = document.getElementById('cardContainer');
+
+  function createCards() {
+    cardsData.forEach(card => {
+      const cardDiv = document.createElement('div');
+      cardDiv.classList.add('card');
+
+      const img = document.createElement('img');
+      img.src = card.image;
+      img.alt = card.title;
+      cardDiv.appendChild(img);
+
+      const title = document.createElement('h3');
+      title.textContent = card.title;
+      cardDiv.appendChild(title)
+
+      const desc = document.createElement('p');
+      desc.textContent = card.description;
+      cardDiv.appendChild(desc);
+
+      container.appendChild(cardDiv);
+    });
+  }
+  createCards();
+</script>
+
+</body>
+</html>
